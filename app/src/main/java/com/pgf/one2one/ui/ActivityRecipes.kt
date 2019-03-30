@@ -16,7 +16,6 @@ import com.pgf.one2one.model.ApiResponseRecipeList
 import com.pgf.one2one.model.Recipe
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
@@ -24,7 +23,6 @@ import java.util.ArrayList
 
 class MainActivity : AppCompatActivity(), LifecycleOwner {
 
-    private lateinit var viewModel: ActivityRecipesViewModel
     private val recipesAdapter: RecipesAdapter = RecipesAdapter(ArrayList<Recipe>())
 
     override fun onCreate(savedInstanceState: Bundle?) {
