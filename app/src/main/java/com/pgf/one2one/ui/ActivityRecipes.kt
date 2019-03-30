@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pgf.one2one.R
 import com.pgf.one2one.api.ApiRetrofit
-import com.pgf.one2one.api.RepositoryRetrofit
 import com.pgf.one2one.model.ApiResponseRecipeList
 import com.pgf.one2one.model.Recipe
 import io.reactivex.SingleObserver
@@ -28,13 +27,9 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     private lateinit var viewModel: ActivityRecipesViewModel
     private val recipesAdapter: RecipesAdapter = RecipesAdapter(ArrayList<Recipe>())
 
-    private lateinit var compositeDisposable: CompositeDisposable
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        compositeDisposable = CompositeDisposable()
 
         initUI()
     }
@@ -62,16 +57,14 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     private fun getRecipes(searchTerm: String) {
 
         val searchResults = ApiRetrofit.instance.searchRecipes(searchTerm)
-        searchResults.subscribeOn(Schedulers.io())
-            .subscribeOn(AndroidSchedulers.mainThread())
+        searchResults
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : SingleObserver<ApiResponseRecipeList> {
                 override fun onSuccess(response: ApiResponseRecipeList) {
                     Log.i("MainActivity", "onSuccess: $response")
 
-                    val handler = Handler(Looper.getMainLooper())
-                    handler.post {
-                        updateAdapter(response)
-                    }
+                    updateAdapter(response)
                 }
 
                 override fun onSubscribe(disposable: Disposable) {
@@ -81,7 +74,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 override fun onError(e: Throwable) {
                     Log.i("MainActivity", "onError $e")
                 }
-
             })
     }
 
