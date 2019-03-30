@@ -8,9 +8,7 @@ import com.pgf.one2one.R
 import com.pgf.one2one.model.Recipe
 import kotlinx.android.synthetic.main.recipe_item.view.*
 
-class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.RecipesViewHolder>() {
-
-    lateinit var recipesList: ArrayList<Recipe>
+class RecipesAdapter(var recipesList: ArrayList<Recipe>) : RecyclerView.Adapter<RecipesAdapter.RecipesViewHolder>() {
 
     fun setRecipes(recipes: List<Recipe>) {
         recipesList = recipes as ArrayList<Recipe>

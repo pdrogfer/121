@@ -10,6 +10,9 @@ import retrofit2.http.Query
 interface ApiRetrofit {
 
     @GET("api")
-    fun searchRecipes(@Query("q") recipeQuery: String?): Single<ApiResponseRecipeList>
+    fun searchRecipes1(@Query("q") recipeQuery: String?): Call<ApiResponseRecipeList>
+
+    @GET("api")
+    fun searchRecipes2(@Query("q") recipeQuery: String?): Single<ApiResponseRecipeList>
 
 }

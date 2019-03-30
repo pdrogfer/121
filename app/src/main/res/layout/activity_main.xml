@@ -10,12 +10,11 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_height="66dp"
+        android:paddingTop="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:background="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,7 +22,7 @@
         <EditText
             android:id="@+id/search_recipe"
             android:layout_width="match_parent"
-            android:layout_height="36dp"
+            android:layout_height="46dp"
             android:hint="Buscar recetas"
             android:imeOptions="actionSearch"
             android:inputType="textNoSuggestions"/>
