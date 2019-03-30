@@ -6,10 +6,8 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pgf.one2one.R
@@ -55,24 +53,14 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 list_recipes.scrollToPosition(0)
-//                getRecipes(s.toString())
-                getRecipes2(s.toString())
+                getRecipes(s.toString())
             }
-
         })
     }
 
-    private fun getRecipes1(searchTerm: String) {
+    private fun getRecipes(searchTerm: String) {
 
         val searchResults = RepositoryRetrofit.instance.searchRecipes(searchTerm)
-        searchResults.observe(this, Observer<List<Recipe>> {
-            recipesAdapter.setRecipes(it)
-        })
-    }
-
-    private fun getRecipes2(searchTerm: String) {
-
-        val searchResults = RepositoryRetrofit.instance.searchRecipes2(searchTerm)
         searchResults.subscribeOn(Schedulers.io())
             .subscribeOn(AndroidSchedulers.mainThread())
             .subscribe(object : SingleObserver<ApiResponseRecipeList> {
