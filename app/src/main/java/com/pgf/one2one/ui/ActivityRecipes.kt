@@ -11,6 +11,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pgf.one2one.R
+import com.pgf.one2one.api.ApiRetrofit
 import com.pgf.one2one.api.RepositoryRetrofit
 import com.pgf.one2one.model.ApiResponseRecipeList
 import com.pgf.one2one.model.Recipe
@@ -60,7 +61,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     private fun getRecipes(searchTerm: String) {
 
-        val searchResults = RepositoryRetrofit.instance.searchRecipes(searchTerm)
+        val searchResults = ApiRetrofit.instance.searchRecipes(searchTerm)
         searchResults.subscribeOn(Schedulers.io())
             .subscribeOn(AndroidSchedulers.mainThread())
             .subscribe(object : SingleObserver<ApiResponseRecipeList> {
