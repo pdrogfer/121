@@ -1,4 +1,4 @@
-package com.pgf.one2one.ui
+package com.pgf.one2one.beer_list.ui
 
 import android.view.LayoutInflater
 import android.view.View
