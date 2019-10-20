@@ -1,30 +1,28 @@
-package com.pgf.one2one.ui
+package com.pgf.one2one.beer_list.ui
 
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pgf.one2one.R
-import com.pgf.one2one.api.ApiRetrofit
 import com.pgf.one2one.model.Beer
-import io.reactivex.SingleObserver
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import com.pgf.one2one.beer_list.presenter.BeersPresenter
+import com.pgf.one2one.beer_list.view.BeersView
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), LifecycleOwner {
+class MainActivity : AppCompatActivity(), LifecycleOwner, BeersView {
 
-    private lateinit var viewModel: ActivityBeersViewModel
+    private lateinit var presenter: BeersPresenter
     private val beerAdapter: BeersAdapter = BeersAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        presenter = BeersPresenter(this)
 
         initUI()
     }
@@ -44,35 +42,12 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 list_recipes.scrollToPosition(0)
-                getRecipes(s.toString())
+                presenter.getRecipes(s.toString())
             }
         })
     }
 
-    private fun getRecipes(searchTerm: String) {
-
-        val searchResults = ApiRetrofit.instance.searchBeers(searchTerm)
-        searchResults
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : SingleObserver<List<Beer>> {
-                override fun onSuccess(response: List<Beer>) {
-                    Log.i("MainActivity", "onSuccess: $response")
-
-                    updateAdapter(response)
-                }
-
-                override fun onSubscribe(disposable: Disposable) {
-                    Log.i("MainActivity", "onSubscribe")
-                }
-
-                override fun onError(e: Throwable) {
-                    Log.i("MainActivity", "onError $e")
-                }
-            })
-    }
-
-    private fun updateAdapter(response: List<Beer>) {
+    override fun updateBeersList(response: List<Beer>) {
         beerAdapter.setBeers(response)
     }
 }
