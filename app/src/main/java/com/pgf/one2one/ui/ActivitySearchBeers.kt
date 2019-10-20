@@ -1,8 +1,6 @@
 package com.pgf.one2one.ui
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -12,20 +10,17 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pgf.one2one.R
 import com.pgf.one2one.api.ApiRetrofit
-import com.pgf.one2one.model.ApiResponseRecipeList
-import com.pgf.one2one.model.Recipe
+import com.pgf.one2one.model.Beer
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.ArrayList
 
 class MainActivity : AppCompatActivity(), LifecycleOwner {
 
-    private lateinit var viewModel: ActivityRecipesViewModel
-    private val recipesAdapter: RecipesAdapter = RecipesAdapter(ArrayList<Recipe>())
+    private lateinit var viewModel: ActivityBeersViewModel
+    private val beerAdapter: BeersAdapter = BeersAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +31,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     private fun initUI() {
 
-        list_recipes.adapter = recipesAdapter
+        list_recipes.adapter = beerAdapter
         list_recipes.layoutManager = LinearLayoutManager(this)
         val decoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         list_recipes.addItemDecoration(decoration)
@@ -56,12 +51,12 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     private fun getRecipes(searchTerm: String) {
 
-        val searchResults = ApiRetrofit.instance.searchRecipes(searchTerm)
+        val searchResults = ApiRetrofit.instance.searchBeers(searchTerm)
         searchResults
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : SingleObserver<ApiResponseRecipeList> {
-                override fun onSuccess(response: ApiResponseRecipeList) {
+            .subscribe(object : SingleObserver<List<Beer>> {
+                override fun onSuccess(response: List<Beer>) {
                     Log.i("MainActivity", "onSuccess: $response")
 
                     updateAdapter(response)
@@ -77,7 +72,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             })
     }
 
-    private fun updateAdapter(response: ApiResponseRecipeList) {
-        recipesAdapter.setRecipes(response.results as ArrayList<Recipe>)
+    private fun updateAdapter(response: List<Beer>) {
+        beerAdapter.setBeers(response)
     }
 }

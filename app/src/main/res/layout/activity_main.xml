@@ -23,7 +23,7 @@
             android:id="@+id/search_recipe"
             android:layout_width="match_parent"
             android:layout_height="46dp"
-            android:hint="Buscar recetas"
+            android:hint="Search beers:"
             android:imeOptions="actionSearch"
             android:inputType="textNoSuggestions"/>
     </com.google.android.material.textfield.TextInputLayout>

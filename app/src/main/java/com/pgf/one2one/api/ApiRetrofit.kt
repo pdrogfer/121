@@ -1,6 +1,6 @@
 package com.pgf.one2one.api
 
-import com.pgf.one2one.model.ApiResponseRecipeList
+import com.pgf.one2one.model.Beer
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -15,7 +15,7 @@ interface ApiRetrofit {
 
     companion object {
 
-        private const val BASE_URL = "http://www.recipepuppy.com/"
+        private const val BASE_URL = "https://api.punkapi.com/v2/"
 
         lateinit var instance: ApiRetrofit
             private set
@@ -42,6 +42,6 @@ interface ApiRetrofit {
 
     }
 
-    @GET("api")
-    fun searchRecipes(@Query("q") recipeQuery: String?): Single<ApiResponseRecipeList>
+    @GET("beers")
+    fun searchBeers(@Query("beer_name") beersQuery: String?): Single<List<Beer>>
 }

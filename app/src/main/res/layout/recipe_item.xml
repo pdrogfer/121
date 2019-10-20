@@ -7,10 +7,10 @@
     android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/recipe_thumbnail"
+        android:id="@+id/beer_thumbnail"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:background="@color/colorPrimary"/>
+        android:src="@drawable/ic_bottle_wine"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
         android:orientation="vertical">
 
             <TextView
-                android:id="@+id/recipe_title"
+                android:id="@+id/beer_name"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
@@ -28,14 +28,14 @@
                 android:textSize="20sp"
                 android:maxLines="1"
                 android:ellipsize="end"
-                tools:text="Paella Valenciana Paella Valenciana"/>
+                tools:text="Mahou"/>
             <TextView
-                android:id="@+id/recipe_ingredients"
+                android:id="@+id/beer_description"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:maxLines="1"
                 android:ellipsize="end"
-                tools:text="arroz con cosas, cosas, cosas, cosas, cosas, cosas,"/>
+                tools:text="This is just a regular beer"/>
     </LinearLayout>
 </LinearLayout>
